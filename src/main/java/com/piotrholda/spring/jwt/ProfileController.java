@@ -16,13 +16,14 @@ import java.util.Optional;
 public class ProfileController {
 
     private final UserRepository userRepository;
+    private final UserMapper userMapper;
 
     @PreAuthorize("hasAnyRole('ADMIN','USER')")
     @GetMapping
     public ResponseEntity<ProfileResponse> getUserDetails(Authentication authentication) {
         Optional<UserEntity> user = userRepository.findByUsername(authentication.getName());
         return user
-                .map(u -> new ProfileResponse(u.getFirstname(), u.getLastname(), u.getUsername(), u.getRole()))
+                .map(userMapper::toProfileResponse)
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
