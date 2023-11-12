@@ -4,10 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-class LoginRequest {
-    private String username;
-    private String password;
+record LoginRequest(
+        String username,
+        String password) {
 }

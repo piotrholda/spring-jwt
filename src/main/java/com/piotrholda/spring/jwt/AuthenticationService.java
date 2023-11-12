@@ -14,23 +14,20 @@ class AuthenticationService {
     private final PasswordEncoder passwordEncoder;
     private final TokenProvider tokenProvider;
     private final AuthenticationManager authenticationManager;
+    private final UserMapper userMapper;
 
     AuthenticationResponse register(RegisterRequest registerRequest) {
-        UserEntity user = UserEntity.builder()
-                .firstname(registerRequest.getFirstname())
-                .lastname(registerRequest.getLastname())
-                .username(registerRequest.getUsername())
-                .password(passwordEncoder.encode(registerRequest.getPassword()))
-                .role(Role.ROLE_USER)
-                .build();
+        UserEntity user = userMapper.toUserEntity(registerRequest);
+        user.setPassword(passwordEncoder.encode(registerRequest.password()));
+        user.setRole(Role.ROLE_USER);
         userRepository.save(user);
         return generateAuthenticationResponse(user);
     }
 
     AuthenticationResponse login(LoginRequest loginRequest) {
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
-                loginRequest.getUsername(), loginRequest.getPassword()));
-        UserEntity user = userRepository.findByUsername(loginRequest.getUsername())
+                loginRequest.username(), loginRequest.password()));
+        UserEntity user = userRepository.findByUsername(loginRequest.username())
                 .orElseThrow();
         return generateAuthenticationResponse(user);
     }

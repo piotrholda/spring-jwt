@@ -7,4 +7,5 @@ import org.springframework.stereotype.Component;
 @Mapper(componentModel = "spring")
 interface UserMapper {
     ProfileResponse toProfileResponse(UserEntity userEntity);
+    UserEntity toUserEntity(RegisterRequest registerRequest);
 }
