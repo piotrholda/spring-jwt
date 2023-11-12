@@ -1,5 +1,6 @@
 package com.piotrholda.spring.jwt;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,7 +16,7 @@ public class AuthenticationController {
     private final AuthenticationService authenticationService;
 
     @PostMapping("/register")
-    public ResponseEntity<AuthenticationResponse> register(@RequestBody RegisterRequest registerRequest) {
+    public ResponseEntity<AuthenticationResponse> register(@Valid @RequestBody RegisterRequest registerRequest) {
         return ResponseEntity.ok(authenticationService.register(registerRequest));
     }
 

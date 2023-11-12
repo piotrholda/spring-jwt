@@ -2,6 +2,7 @@ package com.piotrholda.spring.jwt;
 
 import jakarta.annotation.Nonnull;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -30,7 +31,6 @@ class UserEntity implements UserDetails {
     private String lastname;
     @Column(unique = true)
     private String username;
-    @Column(nullable = false)
     private String password;
     @Enumerated(EnumType.STRING)
     private Role role;

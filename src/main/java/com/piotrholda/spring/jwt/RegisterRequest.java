@@ -1,13 +1,12 @@
 package com.piotrholda.spring.jwt;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
+import jakarta.validation.constraints.Size;
 
 record RegisterRequest(
         String firstname,
         String lastname,
+        @Size(min = 1)
         String username,
+        @Size(min = 1)
         String password) {
 }
