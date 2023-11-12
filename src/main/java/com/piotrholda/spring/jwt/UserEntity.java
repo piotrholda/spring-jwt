@@ -1,5 +1,6 @@
 package com.piotrholda.spring.jwt;
 
+import jakarta.annotation.Nonnull;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -27,9 +28,10 @@ class UserEntity implements UserDetails {
     private Integer id;
     private String firstname;
     private String lastname;
+    @Column(unique = true)
     private String username;
+    @Column(nullable = false)
     private String password;
-
     @Enumerated(EnumType.STRING)
     private Role role;
 
