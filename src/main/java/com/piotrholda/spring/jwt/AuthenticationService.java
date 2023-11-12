@@ -1,6 +1,5 @@
 package com.piotrholda.spring.jwt;
 
-import com.piotrholda.spring.jwt.config.JwtService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -9,11 +8,11 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class AuthenticationService {
+class AuthenticationService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
-    private final JwtService jwtService;
+    private final TokenProvider tokenProvider;
     private final AuthenticationManager authenticationManager;
 
     AuthenticationResponse register(RegisterRequest registerRequest) {
@@ -25,10 +24,7 @@ public class AuthenticationService {
                 .role(Role.ROLE_USER)
                 .build();
         userRepository.save(user);
-        String jwt = jwtService.generateToken(user);
-        return AuthenticationResponse.builder()
-                .token(jwt)
-                .build();
+        return generateAuthenticationResponse(user);
     }
 
     AuthenticationResponse login(LoginRequest loginRequest) {
@@ -36,7 +32,11 @@ public class AuthenticationService {
                 loginRequest.getUsername(), loginRequest.getPassword()));
         UserEntity user = userRepository.findByUsername(loginRequest.getUsername())
                 .orElseThrow();
-        String jwt = jwtService.generateToken(user);
+        return generateAuthenticationResponse(user);
+    }
+
+    private AuthenticationResponse generateAuthenticationResponse(UserEntity user) {
+        String jwt = tokenProvider.generateToken(user);
         return AuthenticationResponse.builder()
                 .token(jwt)
                 .build();

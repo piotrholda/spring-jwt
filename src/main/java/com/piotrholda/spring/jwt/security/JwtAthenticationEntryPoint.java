@@ -1,4 +1,4 @@
-package com.piotrholda.spring.jwt.config;
+package com.piotrholda.spring.jwt.security;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -10,9 +10,9 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 
 @Component
-public class JwtAthenticationEntryPoint implements AuthenticationEntryPoint {
+class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
-        response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
+        response.sendError(HttpServletResponse.SC_UNAUTHORIZED, authException.getMessage());
     }
 }

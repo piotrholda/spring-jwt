@@ -35,15 +35,13 @@ class UserEntity implements UserDetails {
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj) return true;
-
-        if (!(obj instanceof UserEntity))
+        if (this == obj) {
+            return true;
+        }
+        if (!(obj instanceof UserEntity other)) {
             return false;
-
-        UserEntity other = (UserEntity) obj;
-
-        return id != null &&
-                id.equals(other.getId());
+        }
+        return id != null && id.equals(other.getId());
     }
 
     @Override

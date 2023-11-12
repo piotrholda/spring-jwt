@@ -1,4 +1,4 @@
-package com.piotrholda.spring.jwt.config;
+package com.piotrholda.spring.jwt.security;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

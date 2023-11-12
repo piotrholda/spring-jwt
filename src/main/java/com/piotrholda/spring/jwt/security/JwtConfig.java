@@ -1,4 +1,4 @@
-package com.piotrholda.spring.jwt.config;
+package com.piotrholda.spring.jwt.security;
 
 import com.piotrholda.spring.jwt.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -15,18 +15,18 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 @RequiredArgsConstructor
-public class JwtConfig {
+class JwtConfig {
 
     private final UserRepository userRepository;
 
     @Bean
-    public UserDetailsService userDetailsService() {
+    UserDetailsService userDetailsService() {
         return username -> userRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found."));
     }
 
     @Bean
-    public AuthenticationProvider authenticationProvider() {
+    AuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
         authenticationProvider.setUserDetailsService(userDetailsService());
         authenticationProvider.setPasswordEncoder(passwordEncoder());
@@ -34,12 +34,12 @@ public class JwtConfig {
     }
 
     @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
+    AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
     }
 
     @Bean
-    public PasswordEncoder passwordEncoder() {
+    PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 }
