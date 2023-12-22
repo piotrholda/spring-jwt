@@ -6,3 +6,5 @@ spring:
         format-sql: true
         dialect: org.hibernate.dialect.MySQLDialect
     database: mysql
+jwt:
+  secret-key:
