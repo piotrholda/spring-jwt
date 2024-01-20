@@ -22,7 +22,7 @@ import java.util.Set;
 class UserEntity implements UserDetails {
 
     @Id
-    @GeneratedValue(generator = "user_seq")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_seq")
     @SequenceGenerator(name = "user_seq", sequenceName = "w_user_seq", allocationSize = 1)
     private Integer id;
     private String firstname;
