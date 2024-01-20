@@ -1,11 +1,11 @@
 package com.piotrholda.spring.jwt;
 
-import jakarta.servlet.http.HttpServletResponse;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.test.web.server.LocalServerPort;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
 
@@ -44,7 +44,7 @@ class AuthenticationControllerTest {
         ResponseEntity<AuthenticationResponse> response = testRestTemplate.postForEntity("http://localhost:" + port + "/api/v1/auth/register", registerRequest, AuthenticationResponse.class);
 
         // then
-        assertThat(response.getStatusCode().value()).isEqualTo(HttpServletResponse.SC_UNAUTHORIZED);
+        assertThat(response.getStatusCode().value()).isEqualTo(HttpStatus.UNAUTHORIZED.value());
     }
 
     @Test
@@ -57,7 +57,7 @@ class AuthenticationControllerTest {
         ResponseEntity<AuthenticationResponse> response = testRestTemplate.postForEntity("http://localhost:" + port + "/api/v1/auth/register", registerRequest, AuthenticationResponse.class);
 
         // then
-        assertThat(response.getStatusCode().value()).isEqualTo(HttpServletResponse.SC_UNAUTHORIZED);
+        assertThat(response.getStatusCode().value()).isEqualTo(HttpStatus.UNAUTHORIZED.value());
     }
 
     @Test
@@ -87,6 +87,6 @@ class AuthenticationControllerTest {
         ResponseEntity<AuthenticationResponse> response = testRestTemplate.postForEntity("http://localhost:" + port + "/api/v1/auth/login", loginRequest, AuthenticationResponse.class);
 
         // then
-        assertThat(response.getStatusCode().value()).isEqualTo(HttpServletResponse.SC_UNAUTHORIZED);
+        assertThat(response.getStatusCode().value()).isEqualTo(HttpStatus.UNAUTHORIZED.value());
     }
 }
